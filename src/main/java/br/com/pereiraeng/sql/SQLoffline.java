@@ -33,7 +33,7 @@ import br.com.pereiraeng.math.expression.discret.VariavelNB.TypeValue;
  * @author Philipe PEREIRA
  *
  */
-public class SQLoffline extends HashMap<String, SQLtable> {
+public class SQLoffline extends HashMap<String, SQLtable> implements AutoCloseable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -234,6 +234,7 @@ public class SQLoffline extends HashMap<String, SQLtable> {
 		}
 	}
 
+	@Override
 	public void close() {
 		this.time = null;
 		this.file = null;

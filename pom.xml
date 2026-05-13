@@ -15,20 +15,24 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<junit.version>5.10.2</junit.version>
+		<maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
 	</properties>
-
-	<repositories>
-		<repository>
-			<id>pereira-maven-repo</id>
-			<url>
-				https://raw.githubusercontent.com/philipe-pereira/pereira-maven-repo/main</url>
-		</repository>
-	</repositories>
 
 	<dependencies>
 		<dependency>
 			<groupId>br.com.pereiraeng</groupId>
 			<artifactId>pereira-core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>br.com.pereiraeng</groupId>
+			<artifactId>pereira-io</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>br.com.pereiraeng</groupId>
+			<artifactId>pereira-math</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
@@ -39,7 +43,7 @@
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
-			<version>13.3.0.jre11-preview</version>
+			<version>12.4.0.jre8</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -49,18 +53,46 @@
 		</dependency>
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc11</artifactId>
+			<artifactId>ojdbc8</artifactId>
 			<version>23.26.0.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ucanaccess</groupId>
 			<artifactId>ucanaccess</artifactId>
-			<version>5.0.1</version> <!-- Use the latest stable version -->
+			<version>5.0.1</version>
+		</dependency>
+
+		<!-- artefatos locais -->
+		<dependency>
+			<groupId>com.sas.local</groupId>
+			<artifactId>sas-svc-connection</artifactId>
+			<version>9.2-local</version>
 		</dependency>
 		<dependency>
-			<groupId>br.com.pereiraeng</groupId>
-			<artifactId>pereira-geo</artifactId>
-			<version>1.0.0</version>
+			<groupId>com.sas.local</groupId>
+			<artifactId>sas-core</artifactId>
+			<version>9.2-local</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.local</groupId>
+			<artifactId>oracle-spatial-sdoutl</artifactId>
+			<version>local</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>
