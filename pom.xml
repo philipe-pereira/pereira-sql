@@ -35,6 +35,7 @@
 			<artifactId>pereira-math</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -61,22 +62,10 @@
 			<artifactId>ucanaccess</artifactId>
 			<version>5.0.1</version>
 		</dependency>
-
-		<!-- artefatos locais -->
 		<dependency>
-			<groupId>com.sas.local</groupId>
-			<artifactId>sas-svc-connection</artifactId>
-			<version>9.2-local</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sas.local</groupId>
-			<artifactId>sas-core</artifactId>
-			<version>9.2-local</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.local</groupId>
-			<artifactId>oracle-spatial-sdoutl</artifactId>
-			<version>local</version>
+			<groupId>com.oracle.database.spatial</groupId>
+			<artifactId>sdoutl</artifactId>
+			<version>23.26</version>
 		</dependency>
 
 		<dependency>
@@ -95,4 +84,11 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/philipe-pereira/*</url>
+		</repository>
+	</repositories>
 </project>

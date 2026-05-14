@@ -51,7 +51,6 @@ import java.util.regex.Pattern;
 import org.sqlite.jdbc4.JDBC4PreparedStatement;
 
 import com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement;
-import com.sas.rio.MVAPreparedStatement;
 
 import br.com.pereiraeng.core.BinaryUtils;
 import br.com.pereiraeng.core.StringUtils;
@@ -3267,34 +3266,9 @@ public class SQLadapter {
 		switch (i) {
 		case ON_LINE:
 			try {
-				PreparedStatement statement = null;
 				update = adjustStatement(update, this.type);
-				switch (this.type) {
-				case MySQL:
-					statement = (com.mysql.jdbc.PreparedStatement) conn.prepareStatement(update);
-					break;
-				case SQLserver:
-					statement = (SQLServerPreparedStatement) conn.prepareStatement(update);
-					break;
-				case SASIOM:
-					statement = (MVAPreparedStatement) conn.prepareStatement(update);
-					break;
-				case SQLite:
-					statement = (JDBC4PreparedStatement) conn.prepareStatement(update);
-					break;
-				case Oracle:
-					statement = (OraclePreparedStatement) conn.prepareStatement(update);
-					break;
-				case UCanAccess:
-					statement = (UcanaccessPreparedStatement) conn.prepareStatement(update);
-					break;
-				case PostgreSQL:
-					statement = conn.prepareStatement(update);
-					break;
-				case SQLoffLine:
-					break;
-				}
-
+				PreparedStatement statement = conn.prepareStatement(update);
+				checkStatement(statement);
 				int out = statement.executeUpdate();
 				statement.close();
 				return out > 0;
@@ -3334,34 +3308,9 @@ public class SQLadapter {
 		switch (i) {
 		case ON_LINE:
 			try {
-				PreparedStatement statement = null;
-
 				update = adjustStatement(update, this.type);
-				switch (this.type) {
-				case MySQL:
-					statement = (com.mysql.jdbc.PreparedStatement) conn.prepareStatement(update);
-					break;
-				case SQLserver:
-					statement = (SQLServerPreparedStatement) conn.prepareStatement(update);
-					break;
-				case SASIOM:
-					statement = (MVAPreparedStatement) conn.prepareStatement(update);
-					break;
-				case SQLite:
-					statement = (JDBC4PreparedStatement) conn.prepareStatement(update);
-					break;
-				case Oracle:
-					statement = (OraclePreparedStatement) conn.prepareStatement(update);
-					break;
-				case UCanAccess:
-					statement = (UcanaccessPreparedStatement) conn.prepareStatement(update);
-					break;
-				case PostgreSQL:
-					statement = conn.prepareStatement(update);
-					break;
-				case SQLoffLine:
-					break;
-				}
+				PreparedStatement statement = conn.prepareStatement(update);
+				checkStatement(statement);
 				replace(statement, types, objs);
 
 				int out = statement.executeUpdate();
@@ -3385,6 +3334,39 @@ public class SQLadapter {
 			break;
 		}
 		return false;
+	}
+
+	protected void checkStatement(PreparedStatement statement) {
+		switch (this.type) {
+		case MySQL:
+			if (!(statement instanceof com.mysql.jdbc.PreparedStatement))
+				throw new RuntimeException("Wrong statement");
+			break;
+		case SQLserver:
+			if (!(statement instanceof SQLServerPreparedStatement))
+				throw new RuntimeException("Wrong statement");
+			break;
+		case SASIOM:
+			// method overrided
+			break;
+		case SQLite:
+			if (!(statement instanceof JDBC4PreparedStatement))
+				throw new RuntimeException("Wrong statement");
+			break;
+		case Oracle:
+			if (!(statement instanceof OraclePreparedStatement))
+				throw new RuntimeException("Wrong statement");
+			break;
+		case UCanAccess:
+			if (!(statement instanceof UcanaccessPreparedStatement))
+				throw new RuntimeException("Wrong statement");
+			break;
+		case PostgreSQL:
+			// TODO ver o tipo exato nesse caso
+			break;
+		case SQLoffLine:
+			throw new RuntimeException("SQL offline cannot perform update operations");
+		}
 	}
 
 	private static void replace(PreparedStatement ps, int[] types, Object... objs) throws SQLException {

@@ -1,0 +1,37 @@
+name: Publish Maven Package
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+          
+      - name: Verify
+        run: mvn -B -ntp verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish package
+        run: mvn -B -ntp deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
