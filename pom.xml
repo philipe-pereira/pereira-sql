@@ -91,4 +91,12 @@
 			<url>https://maven.pkg.github.com/philipe-pereira/*</url>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/philipe-pereira/pereira-sql</url>
+		</repository>
+	</distributionManagement>
 </project>
